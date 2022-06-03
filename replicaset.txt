@@ -1,0 +1,53 @@
+using docker to create 3 nodes
+
+###create docker network
+docker network create mongoNet
+
+docker network ls
+
+docker run -d -p 30001:27071 --net mongoNet --name m1 mongo:4.0.4 --replSet mongoSet
+
+docker run -d -p 30001:27071 --net mongoNet --name m2 mongo:4.0.4 --replSet mongoSet
+
+docker run -d -p 30001:27071 --net mongoNet --name m3 mongo:4.0.4 --replSet mongoSet
+
+docker will create containers
+
+
+m1 node: 30001
+m2 node: 30002
+m3 node: 30003
+
+eg: mongo://localhost:30001
+
+##add nodes
+rs.add(http://localhost:30002)
+rs.add(http://localhost:30003)
+
+docker ps ---->this command returns all containers
+
+connect to m1 node running in docker containers
+docker exec -it m1 mongo         (it means interactive terminal)
+
+###27071 is the default
+
+###27017(check)
+###create config
+cofig ={ "_id":"mongoSet","members":[{"_id":0,"host":"m1:27071"},{"_id":1,"host":"m2:27071"},{"_id":2,"host":"m3:27071"}]}
+
+###initiate replica set 
+
+rs.initiate(cofig)
+
+rs.initiate(cofig)
+
+rs.reConfig(cofig)
+
+
+
+
+
+
+
+
+

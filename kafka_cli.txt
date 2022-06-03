@@ -1,0 +1,45 @@
+start zookeeper
+
+cd kafka directory
+
+C:\kafka\kafka_2.13-2.7.0   .\bin\windows\zookeeper-server-start.bat .\config\zookeeper.properties
+
+start kafka
+
+C:\kafka\kafka_2.13-2.7.0
+
+C:\kafka\kafka_2.13-2.7.0   .\bin\windows\kafka-server-start.bat .\config\server.properties
+
+---create topic
+
+C:\kafka\kafka_2.13-2.7.0
+
+C:\kafka\kafka_2.13-2.7.0   .\bin\windows\kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic MyFirstTopic
+
+
+--show topics
+
+C:\kafka\kafka_2.13-2.7.0>.\bin\windows\kafka-topics.bat --list --zookeeper localhost:2181
+MyFirstTopic
+virtusaTopic
+
+
+--produce message
+
+C:\kafka\kafka_2.13-2.7.0
+
+C:\kafka\kafka_2.13-2.7.0   .\bin\windows\kafka-console-producer.bat --broker-list localhost:9092 --topic myFirstTopic 
+
+--consume message
+
+C:\kafka\kafka_2.13-2.7.0
+
+C:\kafka\kafka_2.13-2.7.0   .\bin\windows\kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic myFirstTopic --from-beginning
+
+
+topictopics are split into partitions partition 0,partition 1)
+each message within in the partition gets an incremental id,calledd offset
+
+cars_gap ->
+    every 20 seconds message to kafka
+    message: truck id lat long
